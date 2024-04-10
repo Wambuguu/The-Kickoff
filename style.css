@@ -46,3 +46,19 @@ h1 {
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
+
+.filters button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.competition {
+  transition: transform 0.3s ease-in-out;
+}
+
+.competition:hover {
+  transform: translateY(-5px);
+}
