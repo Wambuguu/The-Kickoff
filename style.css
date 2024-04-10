@@ -78,7 +78,9 @@ h1 {
   margin: 10px;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 15px;
+  padding: 15px;
+  cursor: pointer;
 }
 
 .competition-card h3 {
@@ -88,3 +90,10 @@ h1 {
 .competition-card p {
   margin-bottom: 10px;
 }
+
+.competition-card .details-list {
+  margin: 0; 
+  padding: 0; 
+  list-style: none; 
+}
+
