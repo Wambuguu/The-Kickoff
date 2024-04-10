@@ -72,3 +72,23 @@ filterButtons.forEach((button) => {
     filterCompetitions(window.competitions, selectedRegion);
   });
 });
+
+function updateCardDetails(card, competitionData) {
+  // Create and append the name and area of the competition
+  const title = document.createElement("h3");
+  title.textContent = competitionData.name;
+  card.appendChild(title);
+
+  // Add area details
+  const area = document.createElement("p");
+  area.textContent = `Area: ${competitionData.area.name}`;
+  card.appendChild(area);
+
+  // Create and append the details container
+  const detailsContainer = document.createElement("div");
+  detailsContainer.classList.add("details-container");
+
+  // Create and append the details list
+  const detailsList = document.createElement("ul");
+  detailsList.classList.add("details-list");
+}
