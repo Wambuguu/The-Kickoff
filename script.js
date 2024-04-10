@@ -91,4 +91,21 @@ function updateCardDetails(card, competitionData) {
   // Create and append the details list
   const detailsList = document.createElement("ul");
   detailsList.classList.add("details-list");
+
+  // Add code details
+  const codeItem = document.createElement("li");
+  codeItem.textContent = `Code: ${competitionData.code}`;
+  detailsList.appendChild(codeItem);
+
+  // Add flag details available
+  if (competitionData.area.flag) {
+    const flagItem = document.createElement("li");
+    flagItem.innerHTML = `<strong>Flag:</strong><img src="${competitionData.area.flag}" alt="Flag">`;
+    detailsList.appendChild(flagItem);
+  }
+
+  // Add type details
+  const typeItem = document.createElement("li");
+  typeItem.textContent = `Type: ${competitionData.type}`;
+  detailsList.appendChild(typeItem);
 }
