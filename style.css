@@ -62,3 +62,21 @@ h1 {
 .competition:hover {
   transform: translateY(-5px);
 }
+
+#competition-list {
+  display: flex;
+  flex-wrap: wrap;
+  transition: transform 0.3s ease-in-out;
+}
+
+#competition-list:hover {
+  transform: translateY(-5px);
+}
+
+.competition-card {
+  width: 300px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
