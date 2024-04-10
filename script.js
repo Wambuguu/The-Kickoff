@@ -34,3 +34,16 @@ function fetchCompetitionData() {
     })
     .catch((error) => console.error(error));
 }
+
+// Function to filter competitions based on search term and region
+function filterCompetitions(allCompetitions, selectedRegion = "") {
+  const searchTerm = searchInput.value.toLowerCase();
+
+  let filteredCompetitions = allCompetitions;
+
+  if (searchTerm) {
+    filteredCompetitions = filteredCompetitions.filter((competition) =>
+      competition.name.toLowerCase().includes(searchTerm)
+    );
+  }
+}
