@@ -37,9 +37,9 @@ function fetchCompetitionData() {
   fetch("./db.json")
     .then((response) => response.json())
     .then((data) => {
-      const competitions = data.competitions; // Update based on API response structure
+      const competitions = data.competitions; 
       window.competitions = competitions; // Store for later access (search/filter)
-      filterCompetitions(competitions); // Initial display with all competitions
+      filterCompetitions(competitions); 
     })
     .catch((error) => console.error(error));
 }
