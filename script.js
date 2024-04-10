@@ -62,3 +62,13 @@ function filterCompetitions(allCompetitions, selectedRegion = "") {
 searchFilterButton.addEventListener("click", () => {
   filterCompetitions(window.competitions);
 });
+
+// Event listener for each filter button
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    filterButtons.forEach((b) => b.classList.remove("active"));
+    button.classList.add("active");
+    const selectedRegion = button.innerText.toLowerCase();
+    filterCompetitions(window.competitions, selectedRegion);
+  });
+});
