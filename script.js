@@ -46,4 +46,19 @@ function filterCompetitions(allCompetitions, selectedRegion = "") {
       competition.name.toLowerCase().includes(searchTerm)
     );
   }
+
+  if (selectedRegion && selectedRegion !== "all") {
+    filteredCompetitions = filteredCompetitions.filter(
+      (competition) => competition.area.name.toLowerCase() === selectedRegion
+    );
+  }
+  competitionList.innerHTML = ""; // Clear previous list
+  filteredCompetitions.forEach((competition) =>
+    displayCompetition(competition)
+  );
 }
+
+// Event listener for search & filter button
+searchFilterButton.addEventListener("click", () => {
+  filterCompetitions(window.competitions);
+});
