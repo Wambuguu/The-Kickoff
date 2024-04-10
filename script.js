@@ -131,4 +131,28 @@ function updateCardDetails(card, competitionData) {
       <li>Current Matchday: ${currentSeason.currentMatchday}</li>
     </ul>`;
   detailsList.appendChild(currentSeasonItem);
+
+  // Add winner details
+  const winnerItem = document.createElement("li");
+  winnerItem.textContent = `Winner: ${
+    competitionData.currentSeason.winner
+      ? competitionData.currentSeason.winner
+      : "None"
+  }`;
+  detailsList.appendChild(winnerItem);
+
+  // Add numberOfAvailableSeasons details
+  const availableSeasonsItem = document.createElement("li");
+  availableSeasonsItem.textContent = `Number of Available Seasons: ${competitionData.numberOfAvailableSeasons}`;
+  detailsList.appendChild(availableSeasonsItem);
+
+  // Add lastUpdated details
+  const lastUpdatedItem = document.createElement("li");
+  lastUpdatedItem.textContent = `Last Updated: ${competitionData.lastUpdated}`;
+  detailsList.appendChild(lastUpdatedItem);
+  // Append the details list to the details container
+  detailsContainer.appendChild(detailsList);
+
+  // Append the details container to the card
+  card.appendChild(detailsContainer);
 }
