@@ -22,3 +22,15 @@ function displayCompetition(competition) {
 
   competitionList.appendChild(card);
 }
+
+// Function to fetch competition data from API
+function fetchCompetitionData() {
+  fetch("https://api.football-data.org/v4/competitions")
+    .then((response) => response.json())
+    .then((data) => {
+      const competitions = data.competitions;
+      window.competitions = competitions; // Store for later access (search/filter)
+      filterCompetitions(competitions);
+    })
+    .catch((error) => console.error(error));
+}
