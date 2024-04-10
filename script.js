@@ -12,7 +12,7 @@ function displayCompetition(competition) {
   card.addEventListener("click", () => {
     // Fetch detailed competition information using competition.id
     const competitionId = competition.id;
-    fetch(`http://localhost:3000/competitions/${competitionId}`)
+    fetch(`https://api.football-data.org/v4/competitions/${competitionId}`)
       .then((response) => response.json())
       .then((data) => {
         updateCardDetails(card, data); // Call updateCardDetails to update card with detailed information
