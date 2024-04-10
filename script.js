@@ -8,17 +8,24 @@ function displayCompetition(competition) {
   const card = document.createElement("div");
   card.classList.add("competition-card");
   card.innerHTML = `<h3>${competition.name}</h3>`;
-  
+
+  // Add custom attribute to indicate whether card is expanded or not
+  card.setAttribute("data-expanded", "false");
+
   // Add event listener to the entire card for click events
   card.addEventListener("click", () => {
-    // Fetch detailed competition information using competition.id
-    const competitionId = competition.id;
-    fetch(`http://localhost:3000/competitions/${competitionId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        updateCardDetails(card, data); // Call updateCardDetails to update card with detailed information
-      })
-      .catch((error) => console.error(error));
+    const isExpanded = card.getAttribute("data-expanded") === "true";
+    if (!isExpanded) {
+      // Fetch detailed competition information using competition.id
+      const competitionId = competition.id;
+      fetch(`http://localhost:3000/competitions/${competitionId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          updateCardDetails(card, data); // Call updateCardDetails to update card with detailed information
+          card.setAttribute("data-expanded", "true"); // Update custom attribute
+        })
+        .catch((error) => console.error(error));
+    }
   });
 
   competitionList.appendChild(card);
@@ -26,12 +33,13 @@ function displayCompetition(competition) {
 
 // Function to fetch competition data from API
 function fetchCompetitionData() {
+  // const apiUrl = "./db.json"; // Update based on your needs
   fetch("./db.json")
     .then((response) => response.json())
     .then((data) => {
-      const competitions = data.competitions;
+      const competitions = data.competitions; // Update based on API response structure
       window.competitions = competitions; // Store for later access (search/filter)
-      filterCompetitions(competitions);
+      filterCompetitions(competitions); // Initial display with all competitions
     })
     .catch((error) => console.error(error));
 }
@@ -53,19 +61,12 @@ function filterCompetitions(allCompetitions, selectedRegion = "") {
       (competition) => competition.area.name.toLowerCase() === selectedRegion
     );
   }
+
   competitionList.innerHTML = ""; // Clear previous list
   filteredCompetitions.forEach((competition) =>
     displayCompetition(competition)
   );
 }
-
-// Event listener for search & filter button
-searchFilterButton.addEventListener("click", () => {
-  filterCompetitions(window.competitions);
-});
-
-// Call fetchCompetitionData on page load
-fetchCompetitionData();
 
 // Event listener for each filter button
 filterButtons.forEach((button) => {
@@ -76,6 +77,14 @@ filterButtons.forEach((button) => {
     filterCompetitions(window.competitions, selectedRegion);
   });
 });
+
+// Event listener for search & filter button
+searchFilterButton.addEventListener("click", () => {
+  filterCompetitions(window.competitions);
+});
+
+// Call fetchCompetitionData on page load
+fetchCompetitionData();
 
 function updateCardDetails(card, competitionData) {
   // Add area details
@@ -132,13 +141,22 @@ function updateCardDetails(card, competitionData) {
   detailsList.appendChild(currentSeasonItem);
 
   // Add winner details
-  const winnerItem = document.createElement("li");
-  winnerItem.textContent = `Winner: ${
-    competitionData.currentSeason.winner
-      ? competitionData.currentSeason.winner
-      : "None"
-  }`;
-  detailsList.appendChild(winnerItem);
+  if (currentSeason.winner) {
+    const winnerItem = document.createElement("li");
+    winnerItem.innerHTML = `<strong>Winner:</strong>
+      <ul>
+        <li>Name: ${currentSeason.winner.name}</li>
+        <li>Short Name: ${currentSeason.winner.shortName}</li>
+        <li>TLA: ${currentSeason.winner.tla}</li>
+        <li>Crest: <img src="${currentSeason.winner.crest}" alt="Crest"></li>
+        <li>Address: ${currentSeason.winner.address}</li>
+        <li>Website: <a href="${currentSeason.winner.website}">${currentSeason.winner.website}</a></li>
+        <li>Founded: ${currentSeason.winner.founded}</li>
+        <li>Club Colors: ${currentSeason.winner.clubColors}</li>
+        <li>Venue: ${currentSeason.winner.venue}</li>
+      </ul>`;
+    detailsList.appendChild(winnerItem);
+  }
 
   // Add numberOfAvailableSeasons details
   const availableSeasonsItem = document.createElement("li");
