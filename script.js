@@ -108,4 +108,27 @@ function updateCardDetails(card, competitionData) {
   const typeItem = document.createElement("li");
   typeItem.textContent = `Type: ${competitionData.type}`;
   detailsList.appendChild(typeItem);
+
+  // Add emblem details if available
+  if (competitionData.emblem) {
+    const emblemItem = document.createElement("li");
+    emblemItem.innerHTML = `<strong>Emblem:</strong><img src="${competitionData.emblem}" alt="Emblem">`;
+    detailsList.appendChild(emblemItem);
+  }
+
+  // Add plan details
+  const planItem = document.createElement("li");
+  planItem.textContent = `Plan: ${competitionData.plan}`;
+  detailsList.appendChild(planItem);
+
+  // Add current season details
+  const currentSeason = competitionData.currentSeason;
+  const currentSeasonItem = document.createElement("li");
+  currentSeasonItem.innerHTML = `<strong>Current Season:</strong>
+    <ul>
+      <li>Start Date: ${currentSeason.startDate}</li>
+      <li>End Date: ${currentSeason.endDate}</li>
+      <li>Current Matchday: ${currentSeason.currentMatchday}</li>
+    </ul>`;
+  detailsList.appendChild(currentSeasonItem);
 }
