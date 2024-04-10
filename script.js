@@ -7,12 +7,13 @@ const searchFilterButton = document.getElementById("search-filter-btn");
 function displayCompetition(competition) {
   const card = document.createElement("div");
   card.classList.add("competition-card");
-  card.innerHTML = `<h3>${competition.name}</h3><p>${competition.area.name}</p>`;
+  card.innerHTML = `<h3>${competition.name}</h3>`;
+  
   // Add event listener to the entire card for click events
   card.addEventListener("click", () => {
     // Fetch detailed competition information using competition.id
     const competitionId = competition.id;
-    fetch(`https://api.football-data.org/v4/competitions/${competitionId}`)
+    fetch(`http://localhost:3000/competitions/${competitionId}`)
       .then((response) => response.json())
       .then((data) => {
         updateCardDetails(card, data); // Call updateCardDetails to update card with detailed information
@@ -25,7 +26,7 @@ function displayCompetition(competition) {
 
 // Function to fetch competition data from API
 function fetchCompetitionData() {
-  fetch("https://api.football-data.org/v4/competitions")
+  fetch("./db.json")
     .then((response) => response.json())
     .then((data) => {
       const competitions = data.competitions;
@@ -63,6 +64,9 @@ searchFilterButton.addEventListener("click", () => {
   filterCompetitions(window.competitions);
 });
 
+// Call fetchCompetitionData on page load
+fetchCompetitionData();
+
 // Event listener for each filter button
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -74,11 +78,6 @@ filterButtons.forEach((button) => {
 });
 
 function updateCardDetails(card, competitionData) {
-  // Create and append the name and area of the competition
-  const title = document.createElement("h3");
-  title.textContent = competitionData.name;
-  card.appendChild(title);
-
   // Add area details
   const area = document.createElement("p");
   area.textContent = `Area: ${competitionData.area.name}`;
