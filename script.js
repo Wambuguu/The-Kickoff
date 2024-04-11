@@ -16,24 +16,17 @@ function displayCompetition(competition) {
   card.addEventListener("click", () => {
     const isExpanded = card.getAttribute("data-expanded") === "true";
     if (!isExpanded) {
-      // Fetch detailed competition information using competition.id
-      const competitionId = competition.id;
-      fetch(`http://localhost:3000/competitions/${competitionId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          updateCardDetails(card, data); // Call updateCardDetails to update card with detailed information
-          card.setAttribute("data-expanded", "true"); // Update custom attribute
-        })
-        .catch((error) => console.error(error));
+      updateCardDetails(card, competition); // Call updateCardDetails to update card with detailed information
+      card.setAttribute("data-expanded", "true"); // Update custom attribute
     }
   });
 
   competitionList.appendChild(card);
 }
 
-// Function to fetch competition data from API
+// Function to fetch all competition data from API
 function fetchCompetitionData() {
-  fetch("./db.json")
+  fetch("https://football-api-sage.vercel.app/db.json")
     .then((response) => response.json())
     .then((data) => {
       const competitions = data.competitions;
@@ -70,15 +63,13 @@ function filterCompetitions(allCompetitions, selectedRegion = "") {
 // Event listener for each filter button
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    // Remove active class from all buttons
     filterButtons.forEach((b) => b.classList.remove("active"));
-    // Add active class to clicked button
     button.classList.add("active");
 
     // Update selected region based on clicked button text
     const selectedRegion = button.innerText.toLowerCase();
 
-    // Call filterCompetitions with potentially updated region
+    // Call filterCompetitions with updated region
     filterCompetitions(window.competitions, selectedRegion);
   });
 });
@@ -88,67 +79,57 @@ searchFilterButton.addEventListener("click", () => {
   filterCompetitions(window.competitions);
 });
 
-// Call fetchCompetitionData on page load
-fetchCompetitionData();
-
-function updateCardDetails(card, competitionData) {
-
+function updateCardDetails(card, competition) {
   // Add area details
   const area = document.createElement("p");
-  area.textContent = `Area: ${competitionData.area.name}`;
+  area.textContent = `Area: ${competition.area.name}`;
   card.appendChild(area);
 
-  // Create and append the details container
-  const detailsContainer = document.createElement("div");
-  detailsContainer.classList.add("details-container");
-
-  // Create and append the details list
-  const detailsList = document.createElement("ul");
-  detailsList.classList.add("details-list");
-
+  // Add flag details if available
+  if (competition.area.flag) {
+    const flagItem = document.createElement("p");
+    flagItem.innerHTML = `<strong>Flag</strong> <img src="${competition.area.flag}" alt="Flag">`;
+    card.appendChild(flagItem);
+  }
+  
   // Add code details
-  const codeItem = document.createElement("li");
-  codeItem.textContent = `Code: ${competitionData.code}`;
-  detailsList.appendChild(codeItem);
-
-  // Add flag details available
-  if (competitionData.area.flag) {
-    const flagItem = document.createElement("li");
-    flagItem.innerHTML = `<strong>Flag</strong><img src="${competitionData.area.flag}" alt="Flag">`;
-    detailsList.appendChild(flagItem);
+  if (competition.code) {
+    const codeItem = document.createElement("p");
+    codeItem.innerHTML = `Code ${competition.code}`;
+    card.appendChild(codeItem);
   }
 
   // Add type details
-  const typeItem = document.createElement("li");
-  typeItem.textContent = `Type: ${competitionData.type}`;
-  detailsList.appendChild(typeItem);
+  const typeItem = document.createElement("p");
+  typeItem.textContent = `Type: ${competition.type}`;
+  card.appendChild(typeItem);
 
   // Add emblem details if available
-  if (competitionData.emblem) {
-    const emblemItem = document.createElement("li");
-    emblemItem.innerHTML = `<strong>Emblem</strong><img src="${competitionData.emblem}" alt="Emblem">`;
-    detailsList.appendChild(emblemItem);
+  if (competition.emblem) {
+    const emblemItem = document.createElement("p");
+    emblemItem.innerHTML = `<strong>Emblem</strong> <img src="${competition.emblem}" alt="Emblem">`;
+    card.appendChild(emblemItem);
   }
-
+  
   // Add plan details
-  const planItem = document.createElement("li");
-  planItem.textContent = `Plan: ${competitionData.plan}`;
-  detailsList.appendChild(planItem);
+  const planItem = document.createElement("p");
+  planItem.textContent = `Plan: ${competition.plan}`;
+  card.appendChild(planItem);
 
   // Add current season details
-  const currentSeason = competitionData.currentSeason;
-  const currentSeasonItem = document.createElement("li");
+  const currentSeason = competition.currentSeason;
+  const currentSeasonItem = document.createElement("p");
   currentSeasonItem.innerHTML = `<strong>Current Season:</strong>
     <ul>
       <li>Start Date: ${currentSeason.startDate}</li>
       <li>End Date: ${currentSeason.endDate}</li>
       <li>Current Matchday: ${currentSeason.currentMatchday}</li>
     </ul>`;
-  detailsList.appendChild(currentSeasonItem);
+  card.appendChild(currentSeasonItem);
 
-  // Add winner details
+  // Add winner details if available
   if (currentSeason.winner) {
-    const winnerItem = document.createElement("li");
+    const winnerItem = document.createElement("p");
     winnerItem.innerHTML = `<strong>Winner:</strong>
     <ul>
       <li>Name: ${currentSeason.winner.name}</li>
@@ -161,21 +142,19 @@ function updateCardDetails(card, competitionData) {
       <li>Club Colors: ${currentSeason.winner.clubColors}</li>
       <li>Venue: ${currentSeason.winner.venue}</li>
     </ul>`;
-    detailsList.appendChild(winnerItem);
+    card.appendChild(winnerItem);
   }
 
   // Add numberOfAvailableSeasons details
-  const availableSeasonsItem = document.createElement("li");
-  availableSeasonsItem.textContent = `Number of Available Seasons: ${competitionData.numberOfAvailableSeasons}`;
-  detailsList.appendChild(availableSeasonsItem);
+  const availableSeasonsItem = document.createElement("p");
+  availableSeasonsItem.textContent = `Number of Available Seasons: ${competition.numberOfAvailableSeasons}`;
+  card.appendChild(availableSeasonsItem);
 
   // Add lastUpdated details
-  const lastUpdatedItem = document.createElement("li");
-  lastUpdatedItem.textContent = `Last Updated: ${competitionData.lastUpdated}`;
-  detailsList.appendChild(lastUpdatedItem);
-  // Append the details list to the details container
-  detailsContainer.appendChild(detailsList);
-
-  // Append the details container to the card
-  card.appendChild(detailsContainer);
+  const lastUpdatedItem = document.createElement("p");
+  lastUpdatedItem.textContent = `Last Updated: ${competition.lastUpdated}`;
+  card.appendChild(lastUpdatedItem);
 }
+
+// Call fetchCompetitionData on page load
+fetchCompetitionData();
