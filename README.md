@@ -14,10 +14,13 @@ Football is the most popular sport globally, uniting fans across cultures and co
 - Search & Filter (Optional): Enhance usability by implementing search capabilities based on competition name and filter options by area (requires code modification).
 - Clean Code: Adheres to good coding practices for maintainability and readability.
 
+## Live Link
+https://the-kickoff.vercel.app/
+
 ## How It Works:
 
 1. Launch the Application: Open the provided HTML file in a web browser.
-2. Competition List: The application will connect to the API and dynamically generate a list of     compelling competition cards.
+2. Competition List: The application will connect to the API and dynamically generate a list of compelling competition cards.
 3. Explore Details: Click on any card to reveal detailed information about the chosen competition.
 
 ## Technologies Used:
@@ -26,4 +29,4 @@ Football is the most popular sport globally, uniting fans across cultures and co
 - JavaScript: Adds interactivity and dynamic behavior.
 
 ## Contributing
-We welcome contributions to this project! Feel free to fork the repository and submit pull requests with improvements or additional features.
+I welcome contributions to this project! Feel free to fork the repository and submit pull requests with improvements or additional features.
