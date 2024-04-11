@@ -33,13 +33,12 @@ function displayCompetition(competition) {
 
 // Function to fetch competition data from API
 function fetchCompetitionData() {
-  // const apiUrl = "./db.json"; // Update based on your needs
   fetch("./db.json")
     .then((response) => response.json())
     .then((data) => {
-      const competitions = data.competitions; 
+      const competitions = data.competitions;
       window.competitions = competitions; // Store for later access (search/filter)
-      filterCompetitions(competitions); 
+      filterCompetitions(competitions);
     })
     .catch((error) => console.error(error));
 }
@@ -71,9 +70,15 @@ function filterCompetitions(allCompetitions, selectedRegion = "") {
 // Event listener for each filter button
 filterButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    // Remove active class from all buttons
     filterButtons.forEach((b) => b.classList.remove("active"));
+    // Add active class to clicked button
     button.classList.add("active");
+
+    // Update selected region based on clicked button text
     const selectedRegion = button.innerText.toLowerCase();
+
+    // Call filterCompetitions with potentially updated region
     filterCompetitions(window.competitions, selectedRegion);
   });
 });
@@ -87,6 +92,7 @@ searchFilterButton.addEventListener("click", () => {
 fetchCompetitionData();
 
 function updateCardDetails(card, competitionData) {
+
   // Add area details
   const area = document.createElement("p");
   area.textContent = `Area: ${competitionData.area.name}`;
@@ -108,7 +114,7 @@ function updateCardDetails(card, competitionData) {
   // Add flag details available
   if (competitionData.area.flag) {
     const flagItem = document.createElement("li");
-    flagItem.innerHTML = `<strong>Flag:</strong><img src="${competitionData.area.flag}" alt="Flag">`;
+    flagItem.innerHTML = `<strong>Flag</strong><img src="${competitionData.area.flag}" alt="Flag">`;
     detailsList.appendChild(flagItem);
   }
 
@@ -120,7 +126,7 @@ function updateCardDetails(card, competitionData) {
   // Add emblem details if available
   if (competitionData.emblem) {
     const emblemItem = document.createElement("li");
-    emblemItem.innerHTML = `<strong>Emblem:</strong><img src="${competitionData.emblem}" alt="Emblem">`;
+    emblemItem.innerHTML = `<strong>Emblem</strong><img src="${competitionData.emblem}" alt="Emblem">`;
     detailsList.appendChild(emblemItem);
   }
 
@@ -144,17 +150,17 @@ function updateCardDetails(card, competitionData) {
   if (currentSeason.winner) {
     const winnerItem = document.createElement("li");
     winnerItem.innerHTML = `<strong>Winner:</strong>
-      <ul>
-        <li>Name: ${currentSeason.winner.name}</li>
-        <li>Short Name: ${currentSeason.winner.shortName}</li>
-        <li>TLA: ${currentSeason.winner.tla}</li>
-        <li>Crest: <img src="${currentSeason.winner.crest}" alt="Crest"></li>
-        <li>Address: ${currentSeason.winner.address}</li>
-        <li>Website: <a href="${currentSeason.winner.website}">${currentSeason.winner.website}</a></li>
-        <li>Founded: ${currentSeason.winner.founded}</li>
-        <li>Club Colors: ${currentSeason.winner.clubColors}</li>
-        <li>Venue: ${currentSeason.winner.venue}</li>
-      </ul>`;
+    <ul>
+      <li>Name: ${currentSeason.winner.name}</li>
+      <li>Short Name: ${currentSeason.winner.shortName}</li>
+      <li>TLA: ${currentSeason.winner.tla}</li>
+      <strong>Crest</strong> <img src="${currentSeason.winner.crest}" alt="Crest">
+      <li>Address: ${currentSeason.winner.address}</li>
+      <li>Website: <a href="${currentSeason.winner.website}">${currentSeason.winner.website}</a></li>
+      <li>Founded: ${currentSeason.winner.founded}</li>
+      <li>Club Colors: ${currentSeason.winner.clubColors}</li>
+      <li>Venue: ${currentSeason.winner.venue}</li>
+    </ul>`;
     detailsList.appendChild(winnerItem);
   }
 
