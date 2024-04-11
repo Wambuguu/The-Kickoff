@@ -95,7 +95,7 @@ function updateCardDetails(card, competition) {
   // Add code details
   if (competition.code) {
     const codeItem = document.createElement("p");
-    codeItem.innerHTML = `Code ${competition.code}`;
+    codeItem.innerHTML = `Code: ${competition.code}`;
     card.appendChild(codeItem);
   }
 
