@@ -11,7 +11,7 @@ Football is the most popular sport globally, uniting fans across cultures and co
   - Winner's name (if applicable) e.t.c
 
 - API Integration: Leverages a football API ([Football-Data.org](https://football-api-sage.vercel.app/db.json)) to fetch competition data, offering access to a vast array of competitions.
-- Search & Filter (Optional): Enhance usability by implementing search capabilities based on competition name and filter options by area (requires code modification).
+- Search & Filter: Enhance usability by implementing search capabilities based on competition name and filter options by area (requires code modification).
 - Clean Code: Adheres to good coding practices for maintainability and readability.
 
 ## Live Link
