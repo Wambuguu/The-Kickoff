@@ -28,8 +28,9 @@ https://the-kickoff.vercel.app/
 - CSS: Styles the visual presentation of the elements.
 - JavaScript: Adds interactivity and dynamic behavior.
 
+## Author
+([Lewis Mwangi Wambugu](https://github.com/Wambuguu))
+
 ## Contributing
 I welcome contributions to this project! Feel free to fork the repository and submit pull requests with improvements or additional features.
 
-## Author
-([Lewis Mwangi Wambugu](https://github.com/Wambuguu))
